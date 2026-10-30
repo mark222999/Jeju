@@ -162,6 +162,7 @@ button.stop-in{cursor:pointer;-webkit-tap-highlight-color:transparent;transition
 button.stop-in:active{transform:scale(.97)}
 .stop.on .stop-in{background:var(--yellow)}
 .badge{width:42px;height:42px;display:grid;place-items:center;border:var(--line) solid var(--ink);border-radius:50%;background:var(--bg);font-size:18px;line-height:1;font-variant-numeric:tabular-nums}
+.badge .hs{width:30px;height:30px;display:block}
 .badge.nomap{border-style:dashed;background:var(--paper)}
 .body{display:block;min-width:0}
 .meta{display:flex;flex-wrap:wrap;align-items:center;gap:2px 8px;font-size:13px}
@@ -207,6 +208,11 @@ button.stop-in:active{transform:scale(.97)}
     <symbol id="i-columns" viewBox="0 0 24 24"><path d="M4 20V11l3-2 3 2v9M10 20V7l3-2 3 2v13M16 20v-8l2.5-1.7L21 12v8M3 20h18"/></symbol>
     <symbol id="i-bag" viewBox="0 0 24 24"><path d="M5.5 8.5h13l-1 11.5h-11zM9 8.5V7a3 3 0 0 1 6 0v1.5"/></symbol>
     <symbol id="i-sun" viewBox="0 0 24 24"><path d="M3 19h18M6.5 19a5.5 5.5 0 0 1 11 0M12 6v2.5M4.8 10.3l1.8 1.5M19.2 10.3l-1.8 1.5"/></symbol>
+    <symbol id="house" viewBox="-13 -13 26 26">
+      <rect x="-5.5" y="-1" width="11" height="8.5" rx="1.5" fill="#FFFCF6" stroke="#3E3A39" stroke-width="2" stroke-linejoin="round"/>
+      <path d="M-8.5 -1L0 -9L8.5 -1Z" fill="#F2A497" stroke="#3E3A39" stroke-width="2" stroke-linejoin="round"/>
+      <rect x="-1.8" y="2.5" width="3.6" height="5" rx="1" fill="#3E3A39"/>
+    </symbol>
     <symbol id="i-case" viewBox="0 0 24 24"><path d="M4 8.5h16v11H4zM9 8.5V5.5h6v3M4 13.5h16M10.5 13.5v2h3v-2"/></symbol>
   </defs>
 </svg>
@@ -349,7 +355,7 @@ button.stop-in:active{transform:scale(.97)}
           <g id="overlay"><g id="deco"></g><g id="routes"></g><g id="pins"></g></g>
         </svg>
       </div>
-      <p class="legend">點一個行程，地圖上會亮起對應的點。標「選一」的行程，大圓點落在候選地點之間，白色小圓點是各家的位置。虛線圓圈的行程還沒定地點，所以不在地圖上。</p>
+      <p class="legend">點一個行程，地圖上會亮起對應的點，小房子是涯月的住宿。標「選一」的行程，大圓點落在候選地點之間，白色小圓點是各家的位置。虛線圓圈的行程還沒定地點，所以不在地圖上。</p>
       <ol class="stops" id="stops"></ol>
     </div>
   </section>
@@ -370,6 +376,7 @@ var CAT={move:['交通',COL.yellow],eat:['美食',COL.coral],see:['景點',COL.p
 var WK=['日','一','二','三','四','五','六'];
 
 /* ---------- 行程資料（ll = [緯度, 經度]，位置為示意） ---------- */
+var LODGE=[33.4640,126.3640];
 var DAYS=[
 {m:11,d:4,w:'三',color:COL.yellow,icon:'plane',title:'搭機・咖啡廳・住宿',stops:[
  {t:'07:00',cat:'move',name:'台中機場起飛',note:'RMQ → CJU · IT632 班機'},
@@ -378,12 +385,13 @@ var DAYS=[
  {t:'13:00–14:00',cat:'see',name:'龍頭岩',note:'機場附近',ll:[33.5164,126.5120],short:'龍頭岩'},
  {t:'13:00–14:00',cat:'see',name:'彩虹海岸',note:'也可以改去咖啡廳，機場或涯月附近擇一',ll:[33.5120,126.4650],short:'彩虹海岸'},
  {t:'14:00–15:00',cat:'cafe',name:'涯月咖啡街',tags:['Haejigae'],ll:[33.4640,126.3100],short:'涯月咖啡街'},
- {t:'16:00',cat:'stay',name:'住宿 Check in',note:'補眠？',ll:[33.4600,126.3200],short:'涯月住宿'},
+ {t:'16:00',cat:'stay',home:true,name:'住宿 Check in',note:'補眠？ · 54-10 Sineomnyeondae-gil',ll:LODGE,short:'涯月住宿'},
  {t:'18:00',cat:'eat',name:'熟成到黑豬肉（涯月店）',ll:[33.4635,126.3275],short:'熟成到 涯月店'},
  {t:'20:00',cat:'shop',name:'Hanaro Mart 採買',tags:['橘子瑪格麗','漢拿山燒酒'],ll:[33.4625,126.3235],short:'Hanaro Mart'},
  {t:'22:00',cat:'stay',name:'酒・住宿狂歡'}
 ]},
 {m:11,d:5,w:'四',color:COL.aqua,icon:'columns',title:'西南邊・西歸浦',stops:[
+ {t:'',cat:'stay',home:true,name:'從住宿出發',note:'涯月住宿',ll:LODGE,short:'涯月住宿'},
  {t:'09:00–11:00',cat:'see',name:'9.81 Park',note:'早鳥票先在 KKday 或 Trip 買好',tags:['1 小時賽車','1 小時室內'],ll:[33.3900,126.3550],short:'9.81 Park'},
  {t:'12:00',cat:'cafe',name:'濟州堂',tags:['咖啡廳','輕食','正餐','園區'],ll:[33.2950,126.3400],short:'濟州堂'},
  {t:'14:00',cat:'see',name:'大浦柱狀節理帶',note:'西南邊海岸',ll:[33.2374,126.4248],short:'大浦柱狀節理帶'},
@@ -392,6 +400,7 @@ var DAYS=[
  {t:'22:00',cat:'stay',name:'酒吧 或 住宿狂歡'}
 ]},
 {m:11,d:6,w:'五',color:COL.coral,icon:'bag',title:'購物・接機・吃烤肉',stops:[
+ {t:'',cat:'stay',home:true,name:'從住宿出發',note:'涯月住宿',ll:LODGE,short:'涯月住宿'},
  {t:'10:00',cat:'eat',name:'銀熙家解酒湯／宇進解酒湯',note:'二選一（要多熱血？）',ll:[33.5090,126.5200],short:'解酒湯'},
  {t:'11:00',cat:'cafe',name:'挑一間咖啡廳去',opts:[{name:'Coffee Temple（冠軍師）',ll:[33.5010,126.5850]},{name:'E O Mar（海）',ll:[33.5240,126.5890]},{name:'Jeomjeom（海）',ll:[33.5380,126.6330]}],short:'咖啡廳三選一'},
  {t:'13:00–14:00',cat:'shop',name:'東門市場・七星街購物',note:'停東門市場公營停車場',ll:[33.5125,126.5290],short:'東門市場'},
@@ -402,20 +411,21 @@ var DAYS=[
  {t:'22:00',cat:'stay',name:'酒吧 或 住宿狂歡'}
 ]},
 {m:11,d:7,w:'六',color:COL.green,icon:'sun',title:'東半邊・園區',stops:[
+ {t:'',cat:'stay',home:true,name:'從住宿出發',note:'涯月住宿',ll:LODGE,short:'涯月住宿'},
  {t:'09:00',cat:'cafe',name:'倫敦貝果博物館',note:'Dongbok-ro 85, 舊左邑',ll:[33.5405,126.7380],short:'倫敦貝果'},
  {t:'10:00',cat:'see',name:'城山日出峰',note:'爬約 20 分鐘',ll:[33.4580,126.9425],short:'城山日出峰'},
  {t:'11:00',cat:'cafe',name:'城山峰下咖啡廳／Orrrn',note:'看景休息',ll:[33.4620,126.9390],short:'Orrrn'},
- {t:'12:00',cat:'eat',name:'明珍鮑魚／海女博物館',opts:[{name:'明珍鮑魚'},{name:'海女博物館',ll:[33.5235,126.8650]}],short:'海女博物館一帶'},
- {t:'13:00',cat:'see',name:'史努比庭園／童話村／吉卜力展覽',opts:[{name:'史努比庭園',ll:[33.4790,126.8010]},{name:'童話村'},{name:'吉卜力展覽'}],short:'史努比庭園一帶'},
+ {t:'12:00',cat:'eat',name:'明珍鮑魚／海女博物館',opts:[{name:'明珍鮑魚',ll:[33.5300,126.8700]},{name:'海女博物館',ll:[33.5235,126.8650]}],short:'海女博物館一帶'},
+ {t:'13:00',cat:'see',name:'史努比庭園／童話村／吉卜力展覽',opts:[{name:'史努比庭園',ll:[33.4790,126.8010]},{name:'童話村',ll:[33.4670,126.7980]},{name:'吉卜力展覽',ll:[33.4730,126.8070]}],short:'史努比庭園一帶'},
  {t:'15:00',cat:'cafe',name:'Cafe Glencoe',note:'松堂里，和 Blue Bottle 二選一或都去',ll:[33.4700,126.8110],short:'Cafe Glencoe'},
  {t:'15:00',cat:'cafe',name:'Blue Bottle',note:'Beonyeong-ro，舊左邑',ll:[33.4850,126.8080],short:'Blue Bottle'},
  {t:'16:00',cat:'see',name:'大蒜麵包／咸德海灘',ll:[33.5435,126.6690],short:'咸德海灘'},
- {t:'18:00',cat:'eat',name:'Mayonnaise Restaurant／附近道地炸醬麵館／正直豬腳菜包肉',opts:[{name:'Mayonnaise Restaurant',ll:[33.4870,126.4800]},{name:'附近道地炸醬麵館'},{name:'正直豬腳菜包肉'}],short:'Mayonnaise 一帶'},
+ {t:'18:00',cat:'eat',name:'Mayonnaise Restaurant／附近道地炸醬麵館／正直豬腳菜包肉',opts:[{name:'Mayonnaise Restaurant',ll:[33.4870,126.4800]},{name:'附近道地炸醬麵館',ll:[33.4860,126.4760]},{name:'正直豬腳菜包肉',ll:[33.4820,126.4790]}],short:'Mayonnaise 一帶'},
  {t:'20:00',cat:'see',name:'去個汗蒸幕？',note:'還沒決定'},
  {t:'22:00',cat:'stay',name:'酒吧 或 住宿狂歡'}
 ]},
 {m:11,d:8,w:'日',color:COL.yellow,icon:'case',title:'搭機・回家',stops:[
- {t:'09:00',cat:'stay',name:'賴床'},
+ {t:'09:00',cat:'stay',home:true,name:'賴床',note:'涯月住宿，退房後出發',ll:LODGE,short:'涯月住宿'},
  {t:'11:20',cat:'move',name:'CJU → NRT 出境起飛',note:'11:20 起飛'},
  {t:'12:00',cat:'eat',name:'姊妹麵條',note:'退房後去機場附近 · 用 Catch Table 拿位',ll:[33.5080,126.5090],short:'姊妹麵條'},
  {t:'14:00',cat:'see',name:'待定',note:'原本的行程表寫「未知」'},
@@ -426,7 +436,7 @@ var DAYS=[
 ]}
 ];
 DAYS.forEach(function(D){
-  var n=0;
+  var n=0,id=0;
   D.stops.forEach(function(s){
     if(s.opts){
       var L=s.opts.filter(function(o){return o.ll});
@@ -435,7 +445,7 @@ DAYS.forEach(function(D){
         if(L.length>1)s.dots=L.map(function(o){return o.ll});
       }
     }
-    if(s.ll)s.n=++n;
+    if(s.ll){s.id=++id;s.n=s.home?null:++n}
   });
 });
 
@@ -569,9 +579,9 @@ function renderOverlay(L){
 
   pinsG.innerHTML=pts.map(function(p,i){
     var s=p.s,col=CAT[s.cat][1];
-    return '<g class="pin" data-n="'+s.n+'" transform="translate('+f(p.x)+' '+f(p.y)+') scale('+ks+')" aria-hidden="true">'+
+    return '<g class="pin" data-n="'+s.id+'" transform="translate('+f(p.x)+' '+f(p.y)+') scale('+ks+')" aria-hidden="true">'+
       '<circle class="ring" r="19"/>'+
-      '<g class="pop" style="--d:'+(i*260)+'ms"><circle class="dot" r="12.5" fill="'+col+'"/><text dy=".35em">'+s.n+'</text></g>'+
+      '<g class="pop" style="--d:'+(i*260)+'ms"><circle class="dot" r="12.5" fill="'+col+'"/>'+(s.home?'<use href="#house" x="-13" y="-13" width="26" height="26"/>':'<text dy=".35em">'+s.n+'</text>')+'</g>'+
       '<circle r="20" fill="transparent"/>'+bubble(s,p,k,v,L.W)+'</g>';
   }).join('');
   applySel();
@@ -635,13 +645,13 @@ function renderPanel(di,bounce){
     '<div class="day-txt"><p class="day-meta"><span class="day-chip" style="--c:'+D.color+'">第 '+(di+1)+' 天</span><span>2026/'+D.m+'/'+D.d+'（'+D.w+'）</span></p><h3 class="day-title">'+D.title+'</h3></div>';
   stopsEl.innerHTML=D.stops.map(function(s,i){
     var c=CAT[s.cat],has=!!s.ll;
-    var badge=has?'<span class="badge" style="--bg:'+c[1]+'">'+s.n+'</span>':'<span class="badge nomap" role="img" aria-label="未標示於地圖">·</span>';
+    var badge=has?'<span class="badge" style="--bg:'+c[1]+'">'+(s.home?'<svg class="hs" viewBox="-13 -13 26 26" role="img" aria-label="住宿"><use href="#house" x="-13" y="-13" width="26" height="26"/></svg>':s.n)+'</span>':'<span class="badge nomap" role="img" aria-label="未標示於地圖">·</span>';
     var tl=s.opts?s.opts.map(function(o){return o.name}):s.tags;
     var tags=tl?'<span class="tags">'+tl.map(function(t){return '<span class="tag">'+t+'</span>'}).join('')+'</span>':'';
     var pick=s.opts?'<span class="cat pick">'+['','','二','三','四'][s.opts.length]+'選一</span>':'';
-    var inner=badge+'<span class="body"><span class="meta"><span class="time">'+s.t+'</span><span class="cat" style="--bg:'+c[1]+'">'+c[0]+'</span>'+pick+'</span>'+
+    var inner=badge+'<span class="body"><span class="meta">'+(s.t?'<span class="time">'+s.t+'</span>':'')+'<span class="cat" style="--bg:'+c[1]+'">'+c[0]+'</span>'+pick+'</span>'+
       '<span class="name">'+s.name+'</span>'+(s.note?'<span class="note">'+s.note+'</span>':'')+tags+'</span>';
-    return '<li class="stop'+(has?' has':'')+'" style="--i:'+i+'"'+(has?' data-n="'+s.n+'"':'')+'>'+
+    return '<li class="stop'+(has?' has':'')+'" style="--i:'+i+'"'+(has?' data-n="'+s.id+'"':'')+'>'+
       (has?'<button type="button" class="stop-in" aria-pressed="false">'+inner+'</button>':'<div class="stop-in">'+inner+'</div>')+'</li>';
   }).join('');
   if(bounce){restart($('#dayHead'),'pop-in');restart(mapCard,'pop-in')}
