@@ -517,6 +517,7 @@ button.stop-in:active{transform:scale(.97)}
           <li>租車要用信用卡，現金和簽帳金融卡多半不收。</li>
           <li>跟租車公司問 Hi-Pass 收費裝置，並確認要加哪種油。</li>
           <li>停車位很窄，不要停在沒有白線的地方。</li>
+          <li>取車和還車都在樂天租車（Yonghae-ro 92）。</li>
           <li>第 5 天加滿油再還車。</li>
         </ul>
         <p class="hint">細節以你訂的租車公司說明為準。</p>
@@ -576,15 +577,15 @@ var WK=['日','一','二','三','四','五','六'];
 
 /* ---------- 行程資料（ll = [緯度, 經度]，位置為示意） ---------- */
 var LODGE=[33.4640,126.3640];
+var RENT=[33.5075,126.5020];
 var DAYS=[
 {m:11,d:4,w:'三',color:COL.yellow,icon:'plane',title:'搭機・咖啡廳・住宿',stops:[
  {t:'07:00',cat:'move',name:'台中機場起飛',note:'RMQ → CJU · IT632 班機'},
  {t:'10:15',cat:'move',name:'濟州機場抵達',note:'入境後去取租車',ll:[33.5113,126.4930],short:'濟州機場'},
+ {t:'10:45',cat:'move',name:'取車',note:'樂天租車 · Yonghae-ro 92',ll:RENT,short:'樂天租車'},
  {t:'11:00',cat:'eat',name:'李在模 Pizza',note:'機場附近 · 用 Catch Table 先拿位',ll:[33.5070,126.5110],short:'李在模 Pizza'},
- {t:'13:00–14:00',cat:'see',name:'龍頭岩',note:'機場附近',ll:[33.5164,126.5120],short:'龍頭岩'},
- {t:'13:00–14:00',cat:'see',name:'彩虹海岸',note:'也可以改去咖啡廳，機場或涯月附近擇一',ll:[33.5120,126.4650],short:'彩虹海岸'},
- {t:'14:00–15:00',cat:'cafe',name:'涯月咖啡街',tags:['Haejigae'],ll:[33.4640,126.3100],short:'涯月咖啡街'},
- {t:'16:00',cat:'stay',home:true,name:'住宿 Check in',note:'Bolton Villa · 補眠？',ll:LODGE,short:'Bolton Villa'},
+ {t:'15:00',cat:'stay',home:true,name:'住宿 Check in',note:'Bolton Villa · 休息一下，補眠？',ll:LODGE,short:'Bolton Villa'},
+ {t:'16:00–17:00',cat:'cafe',name:'Haejigae',note:'涯月咖啡街 · Aewolbukseo-gil 52',ll:[33.4640,126.3100],short:'Haejigae'},
  {t:'18:00',cat:'eat',name:'熟成到黑豬肉（涯月店）',ll:[33.4635,126.3275],short:'熟成到 涯月店'},
  {t:'20:00',cat:'shop',name:'Hanaro Mart 採買',tags:['橘子瑪格麗','漢拿山燒酒'],ll:[33.4625,126.3235],short:'Hanaro Mart'},
  {t:'22:00',cat:'stay',name:'酒・住宿狂歡'}
@@ -613,7 +614,7 @@ var DAYS=[
  {t:'',cat:'stay',home:true,name:'從住宿出發',note:'Bolton Villa（涯月）',ll:LODGE,short:'Bolton Villa'},
  {t:'09:00',cat:'cafe',name:'倫敦貝果博物館',note:'Dongbok-ro 85, 舊左邑',ll:[33.5405,126.7380],short:'倫敦貝果'},
  {t:'10:00',cat:'see',name:'城山日出峰',note:'爬約 20 分鐘',ll:[33.4580,126.9425],short:'城山日出峰'},
- {t:'11:00',cat:'cafe',name:'城山峰下咖啡廳／Orrrn',note:'看景休息',ll:[33.4620,126.9390],short:'Orrrn'},
+ {t:'11:00',cat:'cafe',name:'城山峰下咖啡廳／Orrrn／Yumin Art Nouveau Collection',note:'看景休息 · Yumin 在 Seopjikoji-ro 107',opts:[{name:'城山峰下咖啡廳／Orrrn',ll:[33.4620,126.9390]},{name:'Yumin Art Nouveau Collection',ll:[33.4250,126.9300]}],short:'城山一帶'},
  {t:'12:00',cat:'eat',name:'明珍鮑魚／海女博物館',opts:[{name:'明珍鮑魚',ll:[33.5300,126.8700]},{name:'海女博物館',ll:[33.5235,126.8650]}],short:'海女博物館一帶'},
  {t:'13:00',cat:'see',name:'史努比庭園／童話村／吉卜力展覽',opts:[{name:'史努比庭園',ll:[33.4790,126.8010]},{name:'童話村',ll:[33.4670,126.7980]},{name:'吉卜力展覽',ll:[33.4730,126.8070]}],short:'史努比庭園一帶'},
  {t:'15:00',cat:'cafe',name:'Cafe Glencoe',note:'松堂里，和 Blue Bottle 二選一或都去',ll:[33.4700,126.8110],short:'Cafe Glencoe'},
@@ -627,8 +628,10 @@ var DAYS=[
  {t:'09:00',cat:'stay',home:true,name:'賴床',note:'Bolton Villa，退房後出發',ll:LODGE,short:'Bolton Villa'},
  {t:'11:20',cat:'move',name:'CJU → NRT 出境起飛',note:'11:20 起飛'},
  {t:'12:00',cat:'eat',name:'姊妹麵條',note:'退房後去機場附近 · 用 Catch Table 拿位',ll:[33.5080,126.5090],short:'姊妹麵條'},
- {t:'14:00',cat:'see',name:'待定',note:'原本的行程表寫「未知」'},
- {t:'16:00',cat:'move',name:'還車，準備回家'},
+ {t:'13:00',cat:'shop',name:'Big Save Pharmacy',note:'採買保養品 · Dori-ro 111 一樓',ll:[33.5020,126.5200],short:'Big Save 藥局'},
+ {t:'14:00',cat:'see',name:'龍頭岩／彩虹海岸',opts:[{name:'龍頭岩',ll:[33.5164,126.5120]},{name:'彩虹海岸',ll:[33.5120,126.4650]}],short:'龍頭岩・彩虹海岸'},
+ {t:'15:00',cat:'shop',name:'樂天超市／Emart 採買伴手禮',note:'二選一',opts:[{name:'樂天超市（Yeonbuk-ro 1）',ll:[33.4935,126.5290]},{name:'Emart（1100-ro 3348）',ll:[33.4890,126.4860]}],short:'超市採買'},
+ {t:'16:00',cat:'move',name:'還車，準備回家',note:'樂天租車 · Yonghae-ro 92，記得先加滿油',ll:RENT,short:'樂天租車'},
  {t:'17:00',cat:'move',name:'濟州機場辦理登機',note:'表格標示 17:20',ll:[33.5113,126.4930],short:'濟州機場'},
  {t:'20:20',cat:'move',name:'IT633 起飛',note:'CJU → RMQ'},
  {t:'21:35',cat:'move',name:'台中機場抵達',note:'RMQ · 回到家'}
@@ -972,7 +975,7 @@ $('#copyAddr').addEventListener('click',function(){
 });
 
 /* 生活會話 */
-var NUMS=[['1','하나','哈哪'],['2','둘','兔ㄦ'],['3','셋','誰'],['4','넷','內'],['5','다섯','踏搜'],['6','여섯','悠搜'],['7','일곱','依辜'],['8','여덟','悠抖'],['9','아홉','阿厚'],['10','열','悠ㄦ'],['14位','열네 명','悠ㄦ 內 謬']];
+var NUMS=[['1','하나','哈哪'],['2','둘','兔ㄦ'],['3','셋','誰'],['4','넷','內'],['5','다섯','踏搜'],['6','여섯','悠搜'],['7','일곱','依辜'],['8','여덟','悠抖'],['9','아홉','阿厚'],['10','열','悠ㄦ'],['11位','열한 명','悠ㄦ 喊 謬']];
 var SAYS=[
  ['不好意思','저기요','揪ㄍㄧ唷',COL.yellow],
  ['這個','이거요','伊勾唷',COL.aqua],
@@ -998,7 +1001,8 @@ $('#says').innerHTML=SAYS.map(sayLi).join('');
 var cY=COL.yellow,cA=COL.aqua,cC=COL.coral,cG=COL.green;
 var GROUPS=[
  ['吃飯點餐',[
-  ['我們有 14 位','열네 명이에요','悠ㄦ內謬，衣耶唷',cY],
+  ['我們有 11 位','열한 명이에요','悠ㄦ喊謬，衣耶唷',cY],
+  ['大人 10 位、小孩 1 位','어른 열 명, 아이 한 명이에요','喔論 悠ㄦ謬，阿衣 哈ㄋ謬，衣耶唷',cG],
   ['請給我菜單','메뉴판 주세요','妹努盤，啾誰唷',cA],
   ['這個請給我','이거 주세요','伊勾，啾誰唷',cC],
   ['不好意思，這裡（叫服務生）','여기요','呦ㄍㄧ唷',cG],
